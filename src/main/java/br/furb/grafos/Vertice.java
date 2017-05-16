@@ -22,5 +22,9 @@ public class Vertice {
 	public void setY(int y) {
 		this.y = y;
 	}
+
+	public boolean isSame(Vertice v1) {
+		return (x == v1.x && y == v1.y);
+	}
 	
 }

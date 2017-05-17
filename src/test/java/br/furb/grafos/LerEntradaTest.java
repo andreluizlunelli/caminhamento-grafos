@@ -56,8 +56,11 @@ public class LerEntradaTest {
 		Assert.assertTrue(arestas.get(0).isSame(aresta1));
 		Assert.assertTrue(arestas.get(1).isSame(aresta2));		
 		
+	}	
+	
+	public void testCriarMatrizDeCusto() {
+		LerEntrada lerEntrada = new LerEntrada(new File("vertices2.txt"));
+		double[] custosExpected = {{}};
 	}
-	
-	
 	
 }

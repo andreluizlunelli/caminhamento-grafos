@@ -23,8 +23,8 @@ public class Vertice {
 		this.y = y;
 	}
 
-	public boolean isSame(Vertice v1) {
-		return (x == v1.x && y == v1.y);
+	public boolean isSame(Vertice outra) {
+		return (x == outra.x && y == outra.y);
 	}
 	
 }

@@ -3,8 +3,8 @@ package br.furb.grafos;
 
 public class Euclidiana {
 	
-	public static double calc() {
-		return Math.sqrt(Math.pow((42 - 40), 2) + Math.pow((3 - 5), 2));
+	public static double calc(Aresta a) {
+		return Math.sqrt(Math.pow((a.getOrigem().getX() - a.getDestino().getX()), 2) + Math.pow((a.getOrigem().getY() - a.getDestino().getY()), 2));
 	}
 	
 }

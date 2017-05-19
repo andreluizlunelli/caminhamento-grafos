@@ -13,21 +13,27 @@ import junit.framework.Assert;
 
 public class LerEntradaTest {
 
-	@Test
-	public void test01() {				
-		// CRIA ARQUIVO PARA SER LIDO 
-		String text = "(42,3)(41,1)\n(40,5)(42,4)";
+	private File criaExemplo(String vertices) {
+		File file = null;
 		try {
 			File folder = new File("c:\\temp\\");
 			folder.mkdir();
-			File file = new File("c:\\temp\\vertices1.txt");
-			Files.write(Paths.get(file.getPath()), text.getBytes());
+			file = new File("c:\\temp\\vertices_x.txt");
+			Files.write(Paths.get(file.getPath()), vertices.getBytes());			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return file;
+	}
+	
+	@Test
+	public void test01() {				
+		// CRIA ARQUIVO PARA SER LIDO 
+		String text = "(42,3)(41,1)\n(40,5)(42,4)";
+		File file = criaExemplo(text);
 		
-		LerEntrada lerEntrada = new LerEntrada(new File("vertices1.txt"));
+		LerEntrada lerEntrada = new LerEntrada(file);
 		List<Vertice> listVertices = lerEntrada.getVertices();
 		
 		Vertice v1 = listVertices.get(0);
@@ -57,10 +63,25 @@ public class LerEntradaTest {
 		Assert.assertTrue(arestas.get(1).isSame(aresta2));		
 		
 	}	
-	
+
+	@Test
 	public void testCriarMatrizDeCusto() {
 		LerEntrada lerEntrada = new LerEntrada(new File("vertices2.txt"));
-		double[] custosExpected = {{}};
+		double[] custosExpected = lerEntrada.getMatrizCusto();
+		System.out.println(lerEntrada);
 	}
+	
+	@Test
+	public void testPreencherArestasDoVertice() {
+		String sVertices = "(42,3)(41,1)\n"
+						 + "(40,5)(42,4)\n" 
+						 + "(40,5)(39,1)";
+		File file = criaExemplo(sVertices);
+		LerEntrada lerEntrada = new LerEntrada(file);
+		lerEntrada.preencherArestasDoVertice();
+		Vertice v = lerEntrada.buscarVerticeXY(40, 5);
+		Assert.assertEquals(2, v.getArestas().size());
+	}
+	
 	
 }

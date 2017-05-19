@@ -22,20 +22,32 @@ public class LerEntrada {
 	}
 
 	private void extrairVertices() {
-		try (Scanner scanner = new Scanner(file)) {
+		try (Scanner scanner = new Scanner(file)) {			
+			int i = 1;
 			while (scanner.hasNext()){
 				Vertice vertice = null;
 				Aresta aresta = null;
 				String line = scanner.nextLine();
-				String[] s = line.split("\\)");
+				String[] s = line.split("\\)");				
 				for (String _s : s) {
 					String[] s2 = _s.split("\\(");					
 					String[] s3 = s2[1].split(",");
-					vertice = new Vertice(Integer.parseInt(s3[0]), Integer.parseInt(s3[1]));
-					addVertice(vertice);														
+					int x = Integer.parseInt(s3[0]);
+					int y = Integer.parseInt(s3[1]);
+					vertice = buscarVerticeXY(x, y);
+					if (vertice == null) {
+						vertice = new Vertice(x, y);
+						vertice.setNomex(i);
+						vertice.setNome("V"+i);
+						i++;
+						addVertice(vertice);
+					}					
+																		
 				}						
 				if (vertice != null) {
-					aresta = new Aresta(this.listVertice.get(this.listVertice.size()-2), this.listVertice.get(this.listVertice.size()-1));
+					Vertice origem = this.listVertice.get(this.listVertice.size()-2);
+					Vertice destino = this.listVertice.get(this.listVertice.size()-1);											
+					aresta = new Aresta(origem, destino);					
 					addAresta(aresta);
 				}
 				
@@ -44,6 +56,16 @@ public class LerEntrada {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public Vertice buscarVerticeXY(int x, int y) {
+		Vertice v = null;
+		for (Vertice vertice : listVertice) {
+			if (vertice.getX() == x && vertice.getY() == y) {
+				return vertice;
+			}
+		}
+		return v;
 	}
 
 	public List<Vertice> getVertices() {		
@@ -61,4 +83,20 @@ public class LerEntrada {
 	public List<Aresta> getArestas() {
 		return this.listAresta;
 	}
+
+	public double[] getMatrizCusto() {
+		return new double[1];
+	}
+
+	public void preencherArestasDoVertice() {
+		for (Vertice vertice : listVertice) {
+			for (Aresta aresta : listAresta) {
+				if (aresta.getDestino().isSame(vertice) 
+					|| aresta.getOrigem().isSame(vertice)) {
+					vertice.addAresta(aresta);
+				}
+			}
+		}		
+	}
+	
 }

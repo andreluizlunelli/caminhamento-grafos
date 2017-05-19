@@ -58,5 +58,9 @@ public class Vertice {
 	public void setNomex(int nomex) {
 		this.nomex = nomex;
 	}
-	
+
+	@Override
+	public String toString() {		
+		return String.format("x:%d y:%d %s", this.getX(), this.getY(), this.getNome());
+	}
 }

@@ -29,9 +29,13 @@ public class LerEntrada {
 				Aresta aresta = null;
 				String line = scanner.nextLine();
 				String[] s = line.split("\\)");				
+				String[] s2;
+				String[] s3;
+				Vertice origem = null;
+				Vertice destino = null; 
 				for (String _s : s) {
-					String[] s2 = _s.split("\\(");					
-					String[] s3 = s2[1].split(",");
+					s2 = _s.split("\\(");					
+					s3 = s2[1].split(",");
 					int x = Integer.parseInt(s3[0]);
 					int y = Integer.parseInt(s3[1]);
 					vertice = buscarVerticeXY(x, y);
@@ -42,13 +46,20 @@ public class LerEntrada {
 						i++;
 						addVertice(vertice);
 					}					
-																		
+					if (origem == null) {
+						origem = vertice;
+					} else if (origem != null && destino == null) {
+						destino = vertice;						
+					} else {
+					}
+					
 				}						
 				if (vertice != null) {
-					Vertice origem = this.listVertice.get(this.listVertice.size()-2);
-					Vertice destino = this.listVertice.get(this.listVertice.size()-1);											
 					aresta = new Aresta(origem, destino);					
 					addAresta(aresta);
+					
+					origem = null;
+					destino = null;
 				}
 				
 			}
